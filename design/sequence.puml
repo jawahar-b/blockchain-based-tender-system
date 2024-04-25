@@ -1,0 +1,51 @@
+@startuml "Blockchain Based Tender/Contract Management System "
+title Blockchain Based Tender System 
+footer Designed & Developed by Jawahar Balachandher, Manvi Pruthi, Meera Mutharaju Rao\nB.Tech CSE, 2025 Batch\nPES University, Electronics City Campus, Bangalore
+
+actor "Vendor" as vendor 
+participant "Application" as app #LightBlue
+participant "Blockchain" as blockchain #LightYellow
+actor "Buyer" as buyer
+
+autonumber
+buyer -> app: select item(s)
+activate app 
+buyer -> app: select vendors
+app -> blockchain: request 
+deactivate app 
+activate blockchain 
+blockchain -> blockchain: record tx
+blockchain -> app: response
+deactivate blockchain 
+activate app
+app -> vendor: notify 
+deactivate app 
+activate vendor 
+vendor -> app: quote available quantity
+deactivate vendor 
+activate app 
+app -> blockchain: request
+deactivate app 
+activate blockchain 
+blockchain -> blockchain: record tx
+blockchain -> app: response
+deactivate blockchain 
+activate app 
+app -> buyer: notify 
+deactivate app 
+activate buyer 
+buyer -> app: vendor acceptance
+deactivate buyer 
+activate app 
+app -> blockchain: request
+deactivate app 
+activate blockchain 
+blockchain -> blockchain: record tx
+blockchain -> app: response
+deactivate blockchain 
+activate app 
+app -> vendor: notify vendor\nacceptance / rejection
+deactivate app 
+
+autonumber stop 
+@enduml 
