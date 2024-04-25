@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>ADSTdashboard</title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+
+	<style>
+		.nav-link {
+			color: white;
+		}
+
+		.navbar {
+			background-color: rgba(204, 0, 255, 0.313);
+		}
+
+		.card {
+			background-color: #e3f2fd;
+		}
+
+		.thead {
+			background-color: rgba(204, 0, 255, 0.313);
+		}
+
+		.navbar-brand {
+			font-size: 1.8rem;
+		}
+	</style>
+
+</head>
+
+<body>
+
+	<nav class="navbar  navbar-expand-lg  ">
+		<div class="container">
+
+			<a class="navbar-brand" href="Buyer">Buyer</a>
+			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+				aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarNav">
+				<ul class="navbar-nav">
+					<li class="nav-item">
+						<a class="nav-link " aria-current="page" href="Buyer">Home</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#">Vendors</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="My_Requests">My Requests</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="Quotes">Quotes</a>
+					</li>
+
+					<li class="nav-item">
+						<a class="nav-link" href="/">Back to Home</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+	<div class="container mt-4">
+		<h3 class="display-6">Choose Vendors</h3>
+		<div class="row">
+			<div class="col">
+				<table class="table table-hover table-striped">
+					<thead class="thead">
+						<tr>
+							<th scope="col">#</th>
+							<th scope="col">Items</th>
+							<th scope="col">Company/name</th>
+							<th scope="col">Email</th>
+
+							<th scope="col">Send</th>
+						</tr>
+					</thead>
+					<tbody class="tbody">
+						<tr>
+							<th scope="row">1</th>
+							<td>Medicine</td>
+							<td>Med Ltd.</td>
+							<td id="1">med@gmail.com</td>
+							<td><button class="btn btn-success" onclick="ADD(1)">+Add</button></td>
+						</tr>
+						<tr>
+							<th scope="row">2</th>
+							<td>Medicine</td>
+							<td>Pharm Eezy Ltd.</td>
+							<td id="2">pharmzee@gmail.com</td>
+							<td><button class="btn btn-success" onclick="ADD(2)">+Add</button></td>
+						</tr>
+						<tr>
+							<th scope="row">3</th>
+							<td>Food</td>
+							<td>Foodie Ltd</td>
+							<td id="3">foodie@gmail.com</td>
+							<td><button class="btn btn-success" onclick="ADD(3)">+Add</button></td>
+						</tr>
+						<tr>
+							<th scope="row">4</th>
+							<td>Food</td>
+							<td>Deliciouz Ltd</td>
+							<td id="4">deliciouz@gmail.com</td>
+							<td><button class="btn btn-success" onclick="ADD(4)">+Add</button></td>
+						</tr>
+						<tr>
+							<th scope="row">5</th>
+							<td>Food</td>
+							<td>Tastiee Ltd</td>
+							<td id="5">tastiee@gmail.com</td>
+							<td><button class="btn btn-success" onclick="ADD(5)">+Add</button></td>
+						</tr>
+
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-2">
+				<button class="btn btn-primary mt-4" onclick="submit()">submit</button>
+			</div>
+
+		</div>
+	</div>
+	<div class="container">
+		<footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
+			<div class="col-md-4 d-flex align-items-center">
+				<p>
+					<b>Designed & Developed by</b><br><br>
+					Jawahar Balachandher, Manvi Pruthi, Meera Rao<br>
+					B.Tech CSE, 2025 Batch<br>
+					PES University, Electronics City Campus, Bangalore
+				</p>
+			</div>
+
+		</footer>
+	</div>
+	<script src="https://cdn.jsdelivr.net/npm/web3@1.9.0/dist/web3.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
+		crossorigin="anonymous"></script>
+	<script>
+		// Add as string
+		let add = "";
+		let a = new Array();
+		let c = 0;
+		function ADD(b) {
+			console.log(b);
+			a[c] = document.getElementById(b).innerHTML;
+			c++;
+			console.log(a);
+		}
+		const submit = async () => {
+
+			await window.contract.methods.setItems(a, jsarray[0]).send({ from: account });
+			console.log(a, jsarray[0]);
+
+		}
+		window.onload = async () => {
+			if (window.ethereum !== undefined) {
+				const accounts = await ethereum.request({ method: "eth_requestAccounts" });
+				account = accounts[0];
+			}
+			const ABI = [
+				{
+					"inputs": [
+						{
+							"internalType": "uint256",
+							"name": "id",
+							"type": "uint256"
+						},
+						{
+							"internalType": "string",
+							"name": "mail",
+							"type": "string"
+						}
+					],
+					"name": "Accepted",
+					"outputs": [],
+					"stateMutability": "nonpayable",
+					"type": "function"
+				},
+				{
+					"inputs": [
+						{
+							"internalType": "string",
+							"name": "email",
+							"type": "string"
+						}
+					],
+					"name": "addSeller",
+					"outputs": [],
+					"stateMutability": "nonpayable",
+					"type": "function"
+				},
+				{
+					"inputs": [
+						{
+							"internalType": "string[]",
+							"name": "_emails",
+							"type": "string[]"
+						},
+						{
+							"internalType": "string",
+							"name": "_item",
+							"type": "string"
+						}
+					],
+					"name": "setItems",
+					"outputs": [],
+					"stateMutability": "nonpayable",
+					"type": "function"
+				},
+				{
+					"inputs": [
+						{
+							"internalType": "string",
+							"name": "_quote",
+							"type": "string"
+						},
+						{
+							"internalType": "string",
+							"name": "id",
+							"type": "string"
+						},
+						{
+							"internalType": "string",
+							"name": "_email",
+							"type": "string"
+						}
+					],
+					"name": "setQuote",
+					"outputs": [],
+					"stateMutability": "nonpayable",
+					"type": "function"
+				},
+				{
+					"inputs": [
+						{
+							"internalType": "string",
+							"name": "mail",
+							"type": "string"
+						}
+					],
+					"name": "getAllItems",
+					"outputs": [
+						{
+							"internalType": "uint256[]",
+							"name": "arr",
+							"type": "uint256[]"
+						}
+					],
+					"stateMutability": "view",
+					"type": "function"
+				},
+				{
+					"inputs": [
+						{
+							"internalType": "uint256",
+							"name": "id",
+							"type": "uint256"
+						}
+					],
+					"name": "getItem",
+					"outputs": [
+						{
+							"internalType": "string",
+							"name": "",
+							"type": "string"
+						}
+					],
+					"stateMutability": "view",
+					"type": "function"
+				},
+				{
+					"inputs": [
+						{
+							"internalType": "string",
+							"name": "mail",
+							"type": "string"
+						}
+					],
+					"name": "getMyQuotes",
+					"outputs": [
+						{
+							"internalType": "string",
+							"name": "",
+							"type": "string"
+						}
+					],
+					"stateMutability": "view",
+					"type": "function"
+				},
+				{
+					"inputs": [
+						{
+							"internalType": "uint256",
+							"name": "id",
+							"type": "uint256"
+						}
+					],
+					"name": "getQuote",
+					"outputs": [
+						{
+							"internalType": "string[]",
+							"name": "",
+							"type": "string[]"
+						},
+						{
+							"internalType": "string[]",
+							"name": "",
+							"type": "string[]"
+						}
+					],
+					"stateMutability": "view",
+					"type": "function"
+				},
+				{
+					"inputs": [],
+					"name": "getQuotes",
+					"outputs": [
+						{
+							"internalType": "uint256",
+							"name": "",
+							"type": "uint256"
+						}
+					],
+					"stateMutability": "view",
+					"type": "function"
+				},
+				{
+					"inputs": [
+						{
+							"internalType": "uint256",
+							"name": "id",
+							"type": "uint256"
+						}
+					],
+					"name": "isAccepted",
+					"outputs": [
+						{
+							"internalType": "bool",
+							"name": "",
+							"type": "bool"
+						}
+					],
+					"stateMutability": "view",
+					"type": "function"
+				},
+				{
+					"inputs": [
+						{
+							"internalType": "uint256",
+							"name": "id",
+							"type": "uint256"
+						},
+						{
+							"internalType": "string",
+							"name": "mail",
+							"type": "string"
+						}
+					],
+					"name": "isPresent",
+					"outputs": [
+						{
+							"internalType": "bool",
+							"name": "",
+							"type": "bool"
+						}
+					],
+					"stateMutability": "view",
+					"type": "function"
+				}
+			]
+			const Address = "0xD217943F784cC62A1ae7715D380Cb0766BC25C17";
+			window.web3 = await new Web3(window.ethereum);
+			window.contract = await new window.web3.eth.Contract(ABI, Address);
+			jsarray = JSON.parse(sessionStorage.getItem("jsArray"));
+			console.log(jsarray)
+
+
+
+		}
+	</script>
+</body>
+
+</html>
