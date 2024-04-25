@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>ADSTdashboard</title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+
+	<style>
+		.nav-link {
+			color: white;
+		}
+
+		.navbar {
+			background-color: rgba(204, 0, 255, 0.313);
+		}
+
+		.card {
+			background-color: #e3f2fd;
+		}
+
+		.thead {
+			background-color: rgba(204, 0, 255, 0.313);
+		}
+
+		.navbar-brand {
+			font-size: 1.8rem;
+		}
+	</style>
+
+</head>
+
+<body>
+	<nav class="navbar  navbar-expand-lg  ">
+		<div class="container">
+
+			<a class="navbar-brand" href="#">Buyer</a>
+			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+				aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarNav">
+				<ul class="navbar-nav">
+					<li class="nav-item">
+						<a class="nav-link " aria-current="page" href="Buyer">Home</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="Sellers">Vendors</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="My_Requests">My Requests</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="Quotes">Quotes</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="/">Back to Home</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+
+	<div class="container mt-4">
+		<h3 class="display-6">Place order</h3>
+		<div class="row">
+			<div class="col mt-4">
+				<div class="row">
+					<div class="col-6 g-3">
+						<label for="input1" class="form-label"><b> Items </b></label>
+						<select id="input1" class="form-select">
+							<option selected>Choose...</option>
+							<option>Rice</option>
+							<option>Grains</option>
+							<option>Paracetamol</option>
+							<option>Chlorhexidine </option>
+						</select>
+					</div>
+
+					<div class="col-2 mt-lg-4 mt-md-4">
+						<button class="btn btn-primary mt-4" onclick="bnit()">+Add</button>
+					</div>
+				</div>
+
+			</div>
+			<div class="row">
+				<div class="col-2">
+					<button class="btn btn-primary mt-4" onclick="submit()"><a href="Sellers"
+							class="text-light">>>></a></button>
+				</div>
+
+			</div>
+		</div>
+		<div class="container">
+			<footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
+				<div class="col-md-4 d-flex align-items-center">
+					<p>
+						<b>Designed & Developed by</b><br><br>
+						Jawahar Balachandher, Manvi Pruthi, Meera Rao<br>
+						B.Tech CSE, 2025 Batch<br>
+						PES University, Electronics City Campus, Bangalore
+					</p>
+				</div>
+
+
+			</footer>
+		</div>
+		<script src="https://cdn.jsdelivr.net/npm/web3@1.9.0/dist/web3.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+			integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
+			crossorigin="anonymous"></script>
+		<script>
+			// Add as string
+			let str = "", account;
+			function bnit() {
+				str += document.getElementById("input1").value + " ";
+				document.getElementById("input1").value = "Choose...";
+				console.log(str);
+			}
+			const submit = async () => {
+				// await window.contract.methods.order(str).send({from:account});
+				jsarray = [str];
+				sessionStorage.setItem("jsArray", JSON.stringify(jsarray));
+
+			}
+			window.onload = async () => {
+				if (window.ethereum !== undefined) {
+					const accounts = await ethereum.request({ method: "eth_requestAccounts" });
+					account = accounts[0];
+				}
+				const ABI = [
+					{
+						"inputs": [
+							{
+								"internalType": "uint256",
+								"name": "id",
+								"type": "uint256"
+							},
+							{
+								"internalType": "string",
+								"name": "mail",
+								"type": "string"
+							}
+						],
+						"name": "Accepted",
+						"outputs": [],
+						"stateMutability": "nonpayable",
+						"type": "function"
+					},
+					{
+						"inputs": [
+							{
+								"internalType": "string",
+								"name": "email",
+								"type": "string"
+							}
+						],
+						"name": "addSeller",
+						"outputs": [],
+						"stateMutability": "nonpayable",
+						"type": "function"
+					},
+					{
+						"inputs": [
+							{
+								"internalType": "string[]",
+								"name": "_emails",
+								"type": "string[]"
+							},
+							{
+								"internalType": "string",
+								"name": "_item",
+								"type": "string"
+							}
+						],
+						"name": "setItems",
+						"outputs": [],
+						"stateMutability": "nonpayable",
+						"type": "function"
+					},
+					{
+						"inputs": [
+							{
+								"internalType": "string",
+								"name": "_quote",
+								"type": "string"
+							},
+							{
+								"internalType": "string",
+								"name": "id",
+								"type": "string"
+							},
+							{
+								"internalType": "string",
+								"name": "_email",
+								"type": "string"
+							}
+						],
+						"name": "setQuote",
+						"outputs": [],
+						"stateMutability": "nonpayable",
+						"type": "function"
+					},
+					{
+						"inputs": [
+							{
+								"internalType": "string",
+								"name": "mail",
+								"type": "string"
+							}
+						],
+						"name": "getAllItems",
+						"outputs": [
+							{
+								"internalType": "uint256[]",
+								"name": "arr",
+								"type": "uint256[]"
+							}
+						],
+						"stateMutability": "view",
+						"type": "function"
+					},
+					{
+						"inputs": [
+							{
+								"internalType": "uint256",
+								"name": "id",
+								"type": "uint256"
+							}
+						],
+						"name": "getItem",
+						"outputs": [
+							{
+								"internalType": "string",
+								"name": "",
+								"type": "string"
+							}
+						],
+						"stateMutability": "view",
+						"type": "function"
+					},
+					{
+						"inputs": [
+							{
+								"internalType": "string",
+								"name": "mail",
+								"type": "string"
+							}
+						],
+						"name": "getMyQuotes",
+						"outputs": [
+							{
+								"internalType": "string",
+								"name": "",
+								"type": "string"
+							}
+						],
+						"stateMutability": "view",
+						"type": "function"
+					},
+					{
+						"inputs": [
+							{
+								"internalType": "uint256",
+								"name": "id",
+								"type": "uint256"
+							}
+						],
+						"name": "getQuote",
+						"outputs": [
+							{
+								"internalType": "string[]",
+								"name": "",
+								"type": "string[]"
+							},
+							{
+								"internalType": "string[]",
+								"name": "",
+								"type": "string[]"
+							}
+						],
+						"stateMutability": "view",
+						"type": "function"
+					},
+					{
+						"inputs": [],
+						"name": "getQuotes",
+						"outputs": [
+							{
+								"internalType": "uint256",
+								"name": "",
+								"type": "uint256"
+							}
+						],
+						"stateMutability": "view",
+						"type": "function"
+					},
+					{
+						"inputs": [
+							{
+								"internalType": "uint256",
+								"name": "id",
+								"type": "uint256"
+							}
+						],
+						"name": "isAccepted",
+						"outputs": [
+							{
+								"internalType": "bool",
+								"name": "",
+								"type": "bool"
+							}
+						],
+						"stateMutability": "view",
+						"type": "function"
+					},
+					{
+						"inputs": [
+							{
+								"internalType": "uint256",
+								"name": "id",
+								"type": "uint256"
+							},
+							{
+								"internalType": "string",
+								"name": "mail",
+								"type": "string"
+							}
+						],
+						"name": "isPresent",
+						"outputs": [
+							{
+								"internalType": "bool",
+								"name": "",
+								"type": "bool"
+							}
+						],
+						"stateMutability": "view",
+						"type": "function"
+					}
+				]
+				const Address = "0xD217943F784cC62A1ae7715D380Cb0766BC25C17";
+				window.web3 = await new Web3(window.ethereum);
+				window.contract = await new window.web3.eth.Contract(ABI, Address);
+
+
+
+
+
+			}
+		</script>
+</body>
+
+</html>
